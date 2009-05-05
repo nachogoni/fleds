@@ -42,6 +42,13 @@ public class GUI extends JFrame {
         return;
 	}
 
+	private void sendText(String text) {
+
+		//TODO:
+
+		return;
+	}
+
 	private void sendMatrix() {
 		
 		StringBuffer str = new StringBuffer();
@@ -85,6 +92,7 @@ public class GUI extends JFrame {
 	
 	//JPanel
 	private JPanel createPanel(){
+		int y = 0;
 		panel = new JPanel();
 		
 		panel.setSize(this.getSize());
@@ -137,8 +145,28 @@ public class GUI extends JFrame {
 		txtSalida.setWrapStyleWord(true);
 		panel.add(txtSalida);
 		
+		//Texto
+		JLabel lblTexto = createLabel("Texto:", 20, 60, 10, txtSalida.getHeight() + txtSalida.getY() + 10);
+		panel.add(lblTexto);
+		txtTexto = createTextField(20, 16 * 40 - lblTexto.getWidth(), lblTexto.getWidth() + 10, lblTexto.getY());
+		txtTexto.setText("Trabajo Practico Sistemas Operativos");
+		txtTexto.setAlignmentX(LEFT_ALIGNMENT);
+		panel.add(txtTexto);
+		
+		//enviaTexto
+		JButton butSendText = this.createButton("Enviar", 20, 120, txtTexto.getX() + txtTexto.getWidth() + 10, txtTexto.getY());
+		panel.add(butSendText);
+
+		butSendText.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent arg0){
+						sendText(txtTexto.toString());
+					}
+				}
+		);
+		
 		//rnd
-		JButton butRND = this.createButton("RND", 20, 120, board.getX() + board.getWidth() + 10, 10);
+		JButton butRND = this.createButton("Azar!", 20, 120, board.getX() + board.getWidth() + 10, y+=10);
 		panel.add(butRND);
 
 		butRND.addActionListener(
@@ -152,6 +180,18 @@ public class GUI extends JFrame {
 						}
 						
 						draw(matrix);
+					}
+				}
+		);
+
+		//
+		JButton butScroll = this.createButton("Scroll", 20, 120, board.getX() + board.getWidth() + 10, y+=30);
+		panel.add(butScroll);
+		
+		butScroll.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent arg0){
+						//TODO:
 					}
 				}
 		);
