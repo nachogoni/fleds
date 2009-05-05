@@ -7,9 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.io.OutputStreamWriter;
+import java.io.*;
+import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,7 +35,7 @@ public class GUI extends JFrame {
 	int [][] matrix = new int[8][16];
 	
 	public GUI(){
-		setSize(800, 600);
+		setSize(670, 460);
 		setLocation(200,200);
 		add(createPanel());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,8 +77,36 @@ public class GUI extends JFrame {
 		}
 
 		txtSalida.setText(str.toString());
+		humix(str.toString());
+//		humix("HOLA");
 		
 		return;
+	}
+
+	private void humix(String text) {
+	    FileOutputStream fos; 
+	    Writer dos;
+
+	    try {
+	    	
+	    	File file= new File("/home/jgoni/feria/fleds/humix.dat");
+	    	FileWriter output = new FileWriter(file,false);
+	    	output.write(text);
+	    	output.flush();
+	    	/*
+	    	
+	      fos = new FileOutputStream(file);
+	      dos=new BufferedWriter(new OutputStreamWriter(fos, ));
+	      //for (int i = 0; i < text.length(); i++)
+	    	  dos.write(text);
+//    	  dos.writeChar(text.charAt(i));
+	    	  dos.flush();
+	      dos.close();
+	      */
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
+		
 	}
 	
 	private void draw(int [][] matrix) {
@@ -145,28 +177,8 @@ public class GUI extends JFrame {
 		txtSalida.setWrapStyleWord(true);
 		panel.add(txtSalida);
 		
-		//Texto
-		JLabel lblTexto = createLabel("Texto:", 20, 60, 10, txtSalida.getHeight() + txtSalida.getY() + 10);
-		panel.add(lblTexto);
-		txtTexto = createTextField(20, 16 * 40 - lblTexto.getWidth(), lblTexto.getWidth() + 10, lblTexto.getY());
-		txtTexto.setText("Trabajo Practico Sistemas Operativos");
-		txtTexto.setAlignmentX(LEFT_ALIGNMENT);
-		panel.add(txtTexto);
-		
-		//enviaTexto
-		JButton butSendText = this.createButton("Enviar", 20, 120, txtTexto.getX() + txtTexto.getWidth() + 10, txtTexto.getY());
-		panel.add(butSendText);
-
-		butSendText.addActionListener(
-				new ActionListener(){
-					public void actionPerformed(ActionEvent arg0){
-						sendText(txtTexto.toString());
-					}
-				}
-		);
-		
 		//rnd
-		JButton butRND = this.createButton("Azar!", 20, 120, board.getX() + board.getWidth() + 10, y+=10);
+		JButton butRND = this.createButton("Azar!", 20, 120, lblSalida.getX()+60, lblSalida.getY()+60);
 		panel.add(butRND);
 
 		butRND.addActionListener(
@@ -184,18 +196,6 @@ public class GUI extends JFrame {
 				}
 		);
 
-		//
-		JButton butScroll = this.createButton("Scroll", 20, 120, board.getX() + board.getWidth() + 10, y+=30);
-		panel.add(butScroll);
-		
-		butScroll.addActionListener(
-				new ActionListener(){
-					public void actionPerformed(ActionEvent arg0){
-						//TODO:
-					}
-				}
-		);
-		
 		return panel;
 	}
 
